@@ -244,8 +244,8 @@ void __write_overflow(void) __compiletime_error("detected write beyond size of o
 __FORTIFY_INLINE char *strncpy(char *p, const char *q, __kernel_size_t size)
 {
 	size_t p_size = __builtin_object_size(p, 0);
-	if (__builtin_constant_p(size) && p_size < size)
-		__write_overflow();
+	//if (__builtin_constant_p(size) && p_size < size)
+	//	__write_overflow();
 	if (p_size < size)
 		fortify_panic(__func__);
 	return __builtin_strncpy(p, q, size);
@@ -298,8 +298,8 @@ __FORTIFY_INLINE size_t strlcpy(char *p, const char *q, size_t size)
 	ret = strlen(q);
 	if (size) {
 		size_t len = (ret >= size) ? size - 1 : ret;
-		if (__builtin_constant_p(len) && len >= p_size)
-			__write_overflow();
+	//	if (__builtin_constant_p(len) && len >= p_size)
+	//		__write_overflow();
 		if (len >= p_size)
 			fortify_panic(__func__);
 		__builtin_memcpy(p, q, len);
@@ -328,8 +328,8 @@ __FORTIFY_INLINE char *strncat(char *p, const char *q, __kernel_size_t count)
 __FORTIFY_INLINE void *memset(void *p, int c, __kernel_size_t size)
 {
 	size_t p_size = __builtin_object_size(p, 0);
-	if (__builtin_constant_p(size) && p_size < size)
-		__write_overflow();
+	//if (__builtin_constant_p(size) && p_size < size)
+	//	__write_overflow();
 	if (p_size < size)
 		fortify_panic(__func__);
 	return __builtin_memset(p, c, size);
@@ -339,12 +339,12 @@ __FORTIFY_INLINE void *memcpy(void *p, const void *q, __kernel_size_t size)
 {
 	size_t p_size = __builtin_object_size(p, 0);
 	size_t q_size = __builtin_object_size(q, 0);
-	if (__builtin_constant_p(size)) {
-		if (p_size < size)
-			__write_overflow();
-		if (q_size < size)
-			__read_overflow2();
-	}
+//	if (__builtin_constant_p(size)) {
+//		if (p_size < size)
+//			__write_overflow();
+//		if (q_size < size)
+//			__read_overflow2();
+//	}
 	if (p_size < size || q_size < size)
 		fortify_panic(__func__);
 	return __builtin_memcpy(p, q, size);
@@ -354,12 +354,12 @@ __FORTIFY_INLINE void *memmove(void *p, const void *q, __kernel_size_t size)
 {
 	size_t p_size = __builtin_object_size(p, 0);
 	size_t q_size = __builtin_object_size(q, 0);
-	if (__builtin_constant_p(size)) {
-		if (p_size < size)
-			__write_overflow();
-		if (q_size < size)
-			__read_overflow2();
-	}
+//	if (__builtin_constant_p(size)) {
+//		if (p_size < size)
+//			__write_overflow();
+//		if (q_size < size)
+//			__read_overflow2();
+//	}
 	if (p_size < size || q_size < size)
 		fortify_panic(__func__);
 	return __builtin_memmove(p, q, size);
@@ -380,12 +380,12 @@ __FORTIFY_INLINE int memcmp(const void *p, const void *q, __kernel_size_t size)
 {
 	size_t p_size = __builtin_object_size(p, 0);
 	size_t q_size = __builtin_object_size(q, 0);
-	if (__builtin_constant_p(size)) {
-		if (p_size < size)
-			__read_overflow();
-		if (q_size < size)
-			__read_overflow2();
-	}
+//	if (__builtin_constant_p(size)) {
+//		if (p_size < size)
+//			__read_overflow();
+//		if (q_size < size)
+//			__read_overflow2();
+//	}
 	if (p_size < size || q_size < size)
 		fortify_panic(__func__);
 	return __builtin_memcmp(p, q, size);
